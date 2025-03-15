@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脉冲星核背景</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .description {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 600px;
+            padding: 25px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 30px rgba(100, 100, 255, 0.2);
+            z-index: 1;
+            text-align: center;
+            border: 1px solid rgba(100, 100, 255, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 28px;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(100, 150, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-shadow: 0 0 5px rgba(100, 150, 255, 0.5);
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 100, 255, 0.2);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            z-index: 10;
+        }
+        
+        .back-link:hover {
+            background-color: rgba(50, 50, 150, 0.4);
+            color: white;
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.5);
+        }
+        
+        footer {
+            position: fixed;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            z-index: 10;
+        }
+        
+        footer a {
+            color: rgba(100, 150, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: rgba(150, 200, 255, 1);
+            text-shadow: 0 0 8px rgba(100, 150, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="description" id="description">
+            <h1>✧ 脉冲星核波纹 ✧</h1>
+            <p>每隔几秒钟，会有2-3个脉冲星核随机出现，向外释放彩色能量环。</p>
+            <p>当您不与页面交互时，脉冲星核出现的频率会逐渐增加。</p>
+        </div>
+
+        <canvas id="backgroundCanvas"></canvas>
+        <a href="../index.html" class="back-link">← 返回主页</a>
+    </main>
+
+    <footer>
+        <p>© 2025 | <a href="https://github.com/1999684" target="_blank">GitHub</a> | 宇宙脉动</p>
+    </footer>
+
+    <script>
+        // 描述文本自动淡出
+        setTimeout(() => {
+            document.getElementById('description').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('description').style.display = 'none';
+            }, 2000);
+        }, 8000);
+
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 设置画布大小为窗口大小
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // 脉冲星核类
+        class PulsarCore {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.maxRadius = Math.random() * 400 + 300; // 增大最大半径
+                this.currentRadius = 0;
+                this.speed = Math.random() * 1.5 + 1; // 增加扩散速度
+                this.color = this.getRandomColor();
+                this.alpha = 1;
+                this.rings = [];
+                this.lifespan = 7000 + Math.random() * 3000; // 生命周期至少7秒
+                this.creationTime = performance.now(); // 记录创建时间
+            }
+
+            getRandomColor() {
+                const colors = [
+                    '#ff4d4d', '#ff9933', '#ffff33',
+                    '#33ff33', '#33ffff', '#3366ff',
+                    '#9933ff', '#ff33ff'
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                const currentTime = performance.now();
+                const elapsedTime = currentTime - this.creationTime;
+                const lifeProgress = Math.min(elapsedTime / this.lifespan, 1);
+
+                // 创建新的环
+                if (this.currentRadius % 30 === 0 && this.currentRadius < this.maxRadius) { // 调整环的间距
+                    this.rings.push({
+                        radius: this.currentRadius,
+                        alpha: 0.8,
+                        width: Math.random() * 5 + 2, // 增加环的宽度
+                        creationTime: currentTime // 记录环创建时间
+                    });
+                }
+
+                // 更新环
+                for (let i = 0; i < this.rings.length; i++) {
+                    this.rings[i].radius += this.speed;
+
+                    // 使用平滑的衰减函数，而不是线性衰减
+                    const ringAge = (currentTime - this.rings[i].creationTime) / this.lifespan;
+                    // 使用二次函数使衰减更加自然
+                    this.rings[i].alpha = 0.8 * Math.max(0, 1 - (ringAge * 1.5) * (ringAge * 1.5));
+
+                    if (this.rings[i].alpha <= 0.01) {
+                        this.rings.splice(i, 1);
+                        i--;
+                    }
+                }
+
+                this.currentRadius += this.speed;
+
+                // 使用平滑的生命周期函数
+                // 在生命周期的前70%保持较高透明度，然后平滑衰减
+                if (lifeProgress < 0.7) {
+                    this.alpha = 1;
+                } else {
+                    // 使用三次方函数使末尾的衰减更加自然
+                    const fadeProgress = (lifeProgress - 0.7) / 0.3;
+                    this.alpha = 1 - (fadeProgress * fadeProgress * fadeProgress);
+                }
+
+                return elapsedTime >= this.lifespan; // 生命周期结束时返回true
+            }
+
+            draw() {
+                // 只绘制环，不绘制中心点
+                for (const ring of this.rings) {
+                    // 随着环扩散，颜色越来越淡，使用平滑的渐变
+                    const fadeProgress = Math.pow(ring.radius / this.maxRadius, 1.5); // 使用幂函数使渐变更自然
+                    const adjustedAlpha = ring.alpha * (1 - fadeProgress * 0.8);
+
+                    if (adjustedAlpha <= 0.01) continue; // 跳过几乎不可见的环
+
+                    ctx.strokeStyle = this.color.replace(')', `,${adjustedAlpha})`).replace('#', 'rgba(').replace(
+                        /^rgba\(([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i,
+                        function (_, r, g, b) {
+                            return `rgba(${parseInt(r, 16)},${parseInt(g, 16)},${parseInt(b, 16)}`;
+                        }
+                    );
+                    ctx.lineWidth = ring.width;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, ring.radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // 脉冲星核管理
+        const pulsarCores = [];
+        let lastPulsarTime = 0;
+        let pulsarInterval = 7000; // 初始间隔7秒
+        let minPulsarInterval = 2000; // 最小间隔2秒
+        let userInactiveTime = 0;
+        const userInactiveThreshold = 5000; // 5秒无操作视为不活跃
+
+        // 用户交互监测
+        function resetUserActivity() {
+            userInactiveTime = 0;
+        }
+
+        window.addEventListener('mousemove', resetUserActivity);
+        window.addEventListener('click', resetUserActivity);
+        window.addEventListener('keydown', resetUserActivity);
+        window.addEventListener('scroll', resetUserActivity);
+
+        // 动画循环
+        let lastTime = 0;
+        function animate(currentTime) {
+            const deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+
+            // 更新用户不活跃时间
+            userInactiveTime += deltaTime;
+
+            // 根据用户不活跃时间调整脉冲星核出现频率
+            if (userInactiveTime > userInactiveThreshold) {
+                const inactiveSeconds = (userInactiveTime - userInactiveThreshold) / 1000;
+                pulsarInterval = Math.max(
+                    minPulsarInterval,
+                    7000 - inactiveSeconds * 200 // 每秒减少200ms，最低到2000ms
+                );
+            } else {
+                pulsarInterval = 7000; // 用户活跃时重置为7秒
+            }
+
+            // 使用更低的透明度清除画布，使轨迹更持久
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 检查是否需要创建新的脉冲星核
+            if (currentTime - lastPulsarTime > pulsarInterval) {
+                lastPulsarTime = currentTime;
+
+                // 随机创建2-3个脉冲星核
+                const count = Math.random() > 0.5 ? 3 : 2;
+                for (let i = 0; i < count; i++) {
+                    pulsarCores.push(new PulsarCore());
+                }
+            }
+
+            // 更新和绘制脉冲星核
+            for (let i = 0; i < pulsarCores.length; i++) {
+                const isFinished = pulsarCores[i].update();
+                pulsarCores[i].draw();
+
+                if (isFinished) {
+                    pulsarCores.splice(i, 1);
+                    i--;
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate(0);
+    </script>
+</body>
+
+</html>
