@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.menu-item {
+    flex: 0 0 300px;
+}
+
+.menu-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #7f8c8d;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #eaeaea;
+    color: #7f8c8d;
+}
+
+footer a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-item {
+        width: 100%;
+        max-width: 400px;
+    }
+}

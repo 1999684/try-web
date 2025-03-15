@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炼金主题动画测试 - 小功能</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .atelier-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .container-over {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f6f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f6f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-stack {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-stack img {
+            position: absolute;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
+        }
+
+        .bottom-layer {
+            z-index: 1;
+            top: 0;
+            left: -10%;
+            height: 100%;
+        }
+
+        .middle-layer {
+            z-index: 2;
+            bottom: 0;
+            right: -10%;
+            height: 120%;
+        }
+
+        .top-layer {
+            z-index: 3;
+            top: 0;
+            right: 0;
+            height: 60%;
+        }
+
+        .series-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(240, 230, 210, 0.3);
+            padding: 10px 15px;
+            border-radius: 8px;
+            min-width: 150px;
+        }
+
+        .series-title {
+            font-weight: bold;
+            color: #8a6642;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #d0b090;
+            width: 100%;
+            text-align: center;
+        }
+
+        .series-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .switch-btn {
+            padding: 8px 15px;
+            background-color: #f0e6d2;
+            border: 2px solid #d0b090;
+            border-radius: 5px;
+            color: #8a6642;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .switch-btn:hover {
+            background-color: #e6d2b8;
+            transform: translateY(-2px);
+        }
+
+        .switch-btn.active {
+            background-color: #d0b090;
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>炼金主题动画测试</h1>
+            <p>看个乐呵</p>
+        </header>
+
+        <main>
+            <div class="atelier-container">
+                <div class="button-container">
+                    <div class="series-group">
+                        <div class="series-title">萨尔布鲁克系列</div>
+                        <div class="series-buttons">
+                            <button class="switch-btn active" data-game="a1re">a1re 玛莉</button>
+                            <button class="switch-btn" data-game="a1">a1 玛莉</button>
+                        </div>
+                    </div>
+                    <div class="series-group">
+                        <div class="series-title">忘却系列</div>
+                        <div class="series-buttons">
+                            <button class="switch-btn" data-game="a25rw">蕾斯娜外传</button>
+                            <button class="switch-btn" data-game="a26">优米雅</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-over">
+                    <h4 id="title">玛莉的炼金工房 Remake ～萨尔布鲁克的炼金术士～</h4>
+                    <div class="image-stack">
+                        <img src="../resources/a1re/2.jpg" class="bottom-layer" alt="背景图">
+                        <img src="../resources/a1re/1.png" class="middle-layer" alt="中层图">
+                        <img src="../resources/a1re/3.png" class="top-layer" alt="上层图">
+                    </div>
+                    <a id="game-link" href="https://www.gamecity.com.tw/atelier/marie-re/" target="_blank">
+                        <p>中文或日文官网</p>
+                    </a>
+                    <p>此处鼠标移动动画，仿照<a href="https://bbs.nga.cn/thread.php?fid=-38122457&rand=30">炼金工房系列 NGA玩家社区</a></p>
+                </div>
+            </div>
+
+            <a href="../index.html" class="back-link">← 返回主页</a>
+        </main>
+
+        <footer>
+            <p>© 2025 | <a href="https://github.com/1999684" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="../js/atelier.js"></script>
+</body>
+
+</html>

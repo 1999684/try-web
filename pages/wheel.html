@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义转盘 - 小功能</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .wheel {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%) rotate(60deg);
+            width: 40px;
+            height: 40px;
+            background-color: #000000;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 10;
+        }
+
+        .controls {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-list {
+            margin: 20px 0;
+        }
+
+        .option-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .option-item input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .option-item button {
+            margin-left: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+
+        .add-option {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .spin-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .spin-button:hover {
+            background-color: #2980b9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>自定义转盘</h1>
+            <p>添加您的选项，然后旋转转盘做出决定</p>
+        </header>
+
+        <main>
+            <div class="wheel-container">
+                <div class="wheel">
+                    <div class="wheel-pointer"></div>
+                    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                </div>
+
+                <div class="controls">
+                    <div class="option-list" id="optionList">
+                        <div class="option-item">
+                            <input type="text" placeholder="选项1" value="选项1">
+                            <button class="remove-option">×</button>
+                        </div>
+                        <div class="option-item">
+                            <input type="text" placeholder="选项2" value="选项2">
+                            <button class="remove-option">×</button>
+                        </div>
+                        <div class="option-item">
+                            <input type="text" placeholder="选项3" value="选项3">
+                            <button class="remove-option">×</button>
+                        </div>
+                        <div class="option-item">
+                            <input type="text" placeholder="选项4" value="选项4">
+                            <button class="remove-option">×</button>
+                        </div>
+                    </div>
+
+                    <button class="add-option" id="addOption">添加选项</button>
+                    <button class="spin-button" id="spinWheel">旋转转盘</button>
+
+                </div>
+            </div>
+
+            <a href="../index.html" class="back-link">← 返回主页</a>
+        </main>
+
+        <footer>
+            <p>© 2025 | <a href="https://github.com/1999684" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('wheelCanvas');
+            const ctx = canvas.getContext('2d');
+            const optionList = document.getElementById('optionList');
+            const addOptionBtn = document.getElementById('addOption');
+            const spinWheelBtn = document.getElementById('spinWheel');
+            const resultDiv = document.getElementById('result');
+
+            let spinning = false;
+            let currentRotation = 0;
+            let targetRotation = 0;
+            let options = ['选项1', '选项2', '选项3', '选项4'];
+            let colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#34495e'];
+
+            // 初始化转盘
+            drawWheel();
+
+            // 添加选项
+            addOptionBtn.addEventListener('click', function () {
+                const newOption = document.createElement('div');
+                newOption.className = 'option-item';
+                newOption.innerHTML = `
+                    <input type="text" placeholder="新选项" value="新选项">
+                    <button class="remove-option">×</button>
+                `;
+                optionList.appendChild(newOption);
+
+                // 更新选项数组
+                updateOptions();
+
+                // 重绘转盘
+                drawWheel();
+            });
+
+            // 删除选项
+            optionList.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-option')) {
+                    if (optionList.children.length > 2) {
+                        e.target.parentElement.remove();
+
+                        // 更新选项数组
+                        updateOptions();
+
+                        // 重绘转盘
+                        drawWheel();
+                    } else {
+                        alert('至少需要保留两个选项');
+                    }
+                }
+            });
+
+            // 监听选项内容变化
+            optionList.addEventListener('input', function (e) {
+                if (e.target.tagName === 'INPUT') {
+                    // 更新选项数组
+                    updateOptions();
+
+                    // 重绘转盘
+                    drawWheel();
+                }
+            });
+
+            // 旋转转盘
+            spinWheelBtn.addEventListener('click', function () {
+                if (spinning) return;
+
+                spinning = true;
+
+                // 随机旋转角度 (2-12圈 + 随机偏移)
+                const spinAngle = 2 * Math.PI * (2 + Math.random() * 10);
+                const randomAngle = Math.random() * 2 * Math.PI;
+                targetRotation = currentRotation + spinAngle + randomAngle;
+
+                // 初始化动画变量
+                startTime = Date.now();
+                initialRotation = currentRotation;
+                requestAnimationFrame(animateRotation);
+            });
+
+            // 更新选项数组
+            function updateOptions() {
+                options = [];
+                const optionItems = optionList.querySelectorAll('.option-item input');
+                optionItems.forEach(item => {
+                    options.push(item.value || '选项');
+                });
+            }
+
+            // 绘制转盘
+            function drawWheel() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = Math.min(centerX, centerY) - 10;
+
+                // 计算每个选项的角度
+                const anglePerOption = (2 * Math.PI) / options.length;
+
+                // 绘制每个扇形
+                for (let i = 0; i < options.length; i++) {
+                    const startAngle = i * anglePerOption + currentRotation;
+                    const endAngle = (i + 1) * anglePerOption + currentRotation;
+
+                    // 绘制扇形
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                    ctx.closePath();
+
+                    // 填充颜色
+                    ctx.fillStyle = colors[i % colors.length];
+                    ctx.fill();
+
+                    // 绘制分隔线
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.lineTo(
+                        centerX + Math.cos(startAngle) * radius,
+                        centerY + Math.sin(startAngle) * radius
+                    );
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // 绘制文字
+                    ctx.save();
+                    ctx.translate(
+                        centerX + Math.cos(startAngle + anglePerOption / 2) * (radius / 2),
+                        centerY + Math.sin(startAngle + anglePerOption / 2) * (radius / 2)
+                    );
+                    ctx.rotate(startAngle + anglePerOption / 2 + Math.PI / 2);
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'white';
+                    ctx.font = '14px Arial';
+
+                    // 文字自动换行 - 优化中文处理
+                    const maxWidth = radius * 0.8;
+                    const text = options[i];
+                    if (ctx.measureText(text).width > maxWidth / 2) {
+                        // 针对中文优化的换行处理
+                        const chars = text.split('');
+                        let line = '';
+                        let lines = [];
+                        for (let j = 0; j < chars.length; j++) {
+                            const testLine = line + chars[j];
+                            if (ctx.measureText(testLine).width > maxWidth / 2 && j > 0) {
+                                lines.push(line);
+                                line = chars[j];
+                            } else {
+                                line = testLine;
+                            }
+                        }
+                        lines.push(line);
+
+                        // 绘制多行文本
+                        for (let j = 0; j < lines.length; j++) {
+                            ctx.fillText(lines[j], 0, j * 15 - (lines.length - 1) * 7.5);
+                        }
+                    } else {
+                        ctx.fillText(text, 0, 0);
+                    }
+
+                    ctx.restore();
+                }
+
+                // 绘制中心圆
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // 旋转动画帧
+            function animateRotation() {
+                const now = Date.now();
+                const elapsed = now - startTime;
+
+                // 缓动函数
+                const easeOut = function (t) {
+                    return 1 - Math.pow(1 - t, 5);
+                };
+
+                const duration = 4000; // 旋转持续时间，单位毫秒
+                const t = Math.min(1, elapsed / duration);
+
+                currentRotation = initialRotation + (targetRotation - initialRotation) * easeOut(t);
+
+                // 重绘转盘
+                drawWheel();
+
+                // 继续动画或结束
+                if (t < 1) {
+                    requestAnimationFrame(animateRotation);
+                } else {
+                    spinning = false;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
