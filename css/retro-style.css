@@ -1,0 +1,228 @@
+/* 复古风格CSS */
+:root {
+  /* 亮色主题变量 */
+  --primary-color: #8B4513;  /* 棕褐色 */
+  --secondary-color: #F5DEB3; /* 小麦色 */
+  --text-color: #3E2723;  /* 深棕色 */
+  --background-color: #FFF8E1; /* 米黄色 */
+  --accent-color: #A1887F; /* 淡棕色 */
+  --card-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+  --container-bg: rgba(255, 248, 225, 0.9);
+  --svg-fill: #a1887f;
+  --svg-opacity: 0.1;
+}
+
+/* 暗色主题变量 */
+[data-theme="dark"] {
+  --primary-color: #D2B48C;  /* 棕褐色变浅 */
+  --secondary-color: #5D4037; /* 深棕色 */
+  --text-color: #E0E0E0;  /* 浅灰色文字 */
+  --background-color: #2D2D2D; /* 深灰色背景 */
+  --accent-color: #8D6E63; /* 中棕色 */
+  --card-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+  --container-bg: rgba(45, 45, 45, 0.95);
+  --svg-fill: #8D6E63;
+  --svg-opacity: 0.2;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'ZCOOL XiaoWei', serif, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  padding: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='var(--svg-fill)' fill-opacity='var(--svg-opacity)' fill-rule='evenodd'/%3E%3C/svg%3E");
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: var(--container-bg);
+  padding: 30px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 8px 8px 0 var(--accent-color);
+  transition: background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+/* 主题切换按钮样式 */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  border: 2px solid var(--primary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--card-shadow);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle .icon {
+  font-size: 24px;
+  color: var(--primary-color);
+  transition: transform 0.5s ease;
+}
+
+[data-theme="dark"] .theme-toggle .sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .moon {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle .sun {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle .moon {
+  display: block;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 0 var(--secondary-color);
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+.header-line, .footer-line {
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--primary-color) 10px,
+    var(--secondary-color) 10px,
+    var(--secondary-color) 20px
+  );
+  margin: 15px auto;
+  transition: background 0.5s ease;
+}
+
+/* 其余CSS保持不变 */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.menu-item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--primary-color);
+  padding: 20px;
+  transition: transform 0.3s ease, background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+  height: 100%;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--primary-color);
+  transition: background-color 0.5s ease;
+}
+
+.card h2 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  border-bottom: 2px dotted var(--primary-color);
+  padding-bottom: 5px;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+.card p {
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: color 0.5s ease;
+}
+
+.card-icon {
+  height: 50px;
+  margin-bottom: 15px;
+  /* 可以在这里添加图标 */
+}
+
+footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: color 0.5s ease;
+}
+
+footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--primary-color);
+  padding-bottom: 2px;
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--accent-color);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .menu {
+    grid-template-columns: 1fr;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+}
