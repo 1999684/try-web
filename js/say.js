@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('开始尝试获取JSON文件...');
         
         // GitHub Pages 上的相对路径
-        const jsonPath = '../data/quotes.json';
+        const jsonPath = '/try-web/data/quotes.json';
         
         return fetch(jsonPath)
             .then(response => {
