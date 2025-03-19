@@ -31,5 +31,4 @@ jobs:
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add data/quotes.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update daily quotes"
-          git push
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update daily quotes" && git push)
