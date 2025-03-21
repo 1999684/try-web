@@ -93,10 +93,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // 获取随机备用名言
     function getRandomFallbackQuote() {
         const randomIndex = Math.floor(Math.random() * fallbackQuotes.length);
+        // 使用UTC时间或特定时区的时间
+        const today = new Date();
+        // 转换为东八区(北京时间)的日期字符串
+        const beijingDate = new Date(today.getTime() + (8 * 60 * 60 * 1000)).toISOString().split('T')[0];
+        
         return {
             content: fallbackQuotes[randomIndex].content,
             author: fallbackQuotes[randomIndex].author,
-            date: new Date().toISOString().split('T')[0]
+            date: beijingDate
         };
     }
 
@@ -109,14 +114,15 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('获取到的数据:', data);
             
             if (data.quotes && data.quotes.length > 0) {
-                // 获取当前日期
+                // 获取当前日期（使用东八区/北京时间）
                 const today = new Date();
-                today.setHours(0, 0, 0, 0); // 设置为当天的开始时间
+                const beijingTime = new Date(today.getTime() + (8 * 60 * 60 * 1000));
+                beijingTime.setHours(0, 0, 0, 0); // 设置为当天的开始时间
                 
                 // 过滤出当前日期及之前的名言
                 const validQuotes = data.quotes.filter(quote => {
                     const quoteDate = new Date(quote.date);
-                    return quoteDate <= today;
+                    return quoteDate <= beijingTime;
                 });
                 
                 if (validQuotes.length > 0) {
