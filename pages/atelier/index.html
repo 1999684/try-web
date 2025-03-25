@@ -9,16 +9,19 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #1a1a1a; /* 深色背景底色 */
-            background-image: url('../../resources/a26/2.jpg'); /* 背景图片路径，暂时为空 */
+            background-color: #1a1a1a;
+            /* 深色背景底色 */
+            background-image: url('../../resources/a26/2.jpg');
+            /* 背景图片路径，暂时为空 */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            color: #f0f0f0; /* 更改文字颜色为浅色，以适应深色背景 */
+            color: #f0f0f0;
+            /* 更改文字颜色为浅色，以适应深色背景 */
             position: relative;
         }
-        
+
         body::before {
             content: '';
             position: fixed;
@@ -26,7 +29,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* 深色半透明蒙版 */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* 深色半透明蒙版 */
             z-index: -1;
         }
 
@@ -35,15 +39,17 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
-            z-index: 1; /* 确保内容在蒙版上方 */
+            z-index: 1;
+            /* 确保内容在蒙版上方 */
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 40px;
-            position: relative; /* 添加相对定位 */
+            position: relative;
+            /* 添加相对定位 */
         }
-        
+
         .back-link {
             display: flex;
             align-items: center;
@@ -56,15 +62,27 @@
             border-radius: 50%;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            position: absolute; /* 绝对定位 */
+            position: absolute;
+            /* 绝对定位 */
             left: 0;
             top: 50%;
-            transform: translateY(-50%); /* 垂直居中 */
+            transform: translateY(-50%);
+            /* 垂直居中 */
         }
+
         header h1 {
-            color: #66ccff; /* 添加亮蓝色调 */
+            color: #66ccff;
+            /* 添加亮蓝色调 */
             font-weight: 700;
             letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #66ccff;
+            /* 添加亮蓝色调 */
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
         .game-grid {
@@ -80,7 +98,8 @@
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 375px; /* 修改高度为宽度的1.5倍，形成2:3的比例 */
+            height: 375px;
+            /* 修改高度为宽度的1.5倍，形成2:3的比例 */
             cursor: pointer;
         }
 
@@ -136,29 +155,35 @@
         .section-title {
             margin: 40px 0 20px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #444; /* 更改为深色边框 */
-            color: #f0f0f0; /* 更改为浅色文字 */
+            border-bottom: 2px solid #444;
+            /* 更改为深色边框 */
+            color: #f0f0f0;
+            /* 更改为浅色文字 */
         }
-        
+
         /* 调整卡片样式以适应深色背景 */
         .game-card {
             position: relative;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* 加深阴影 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            /* 加深阴影 */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 375px;
             cursor: pointer;
-            background-color: #2a2a2a; /* 卡片背景色调整为深色 */
+            background-color: #2a2a2a;
+            /* 卡片背景色调整为深色 */
         }
-        
+
         /* 调整页脚样式 */
         footer {
-            color: #aaa; /* 更浅的灰色 */
+            color: #aaa;
+            /* 更浅的灰色 */
         }
-        
+
         footer a {
-            color: #6699ff; /* 更亮的链接颜色 */
+            color: #6699ff;
+            /* 更亮的链接颜色 */
             text-decoration: none;
         }
     </style>
@@ -168,11 +193,12 @@
     <div class="container">
         <header>
             <h1>炼金工房系列游戏</h1>
-            <p>点击游戏海报查看详细信息</p>
+            <p>点击游戏海报查看详细信息，暂时只打算steam上有的</p>
             <a href="../../index.html" class="back-link">←</a>
         </header>
 
         <main>
+            <h2>正传</h2>
             <div class="game-grid">
                 <a href="./a26/index.html" class="game-card">
                     <img src="../../resources/a26/library.jpg" alt="优米雅的炼金工房" class="game-poster" onerror="this.src=''">
@@ -198,8 +224,124 @@
                         <div class="game-year">2023年</div>
                     </div>
                 </a>
+                <a href="./a23/index.html" class="game-card">
+                    <img src="../../resources/a23/library.jpg" alt="苏菲的炼金工房2" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A23 苏菲的炼金工房2 ～不可思议梦的炼金术士～</div>
+                        <div class="game-series">不可思议系列</div>
+                        <div class="game-year">2022年</div>
+                    </div>
+                </a>
+                <a href="./a22/index.html" class="game-card">
+                    <img src="../../resources/a22/library.jpg" alt="莱莎的炼金工房2" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A22 莱莎的炼金工房2 ～失落传说与秘密妖精～</div>
+                        <div class="game-series">莱莎系列</div>
+                        <div class="game-year">2021年</div>
+                    </div>
+                </a>
+                <a href="./a21/index.html" class="game-card">
+                    <img src="../../resources/a21/library.jpg" alt="莱莎的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A21 莱莎的炼金工房 ～常暗女王与秘密藏身处～</div>
+                        <div class="game-series">莱莎系列</div>
+                        <div class="game-year">2019年</div>
+                    </div>
+                </a>
+                <a href="./a20/index.html" class="game-card">
+                    <img src="../../resources/a20/library.jpg" alt="露露亚的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A20 露露亚的炼金工房 ～亚兰德之炼金术士4～</div>
+                        <div class="game-series">亚兰德系列</div>
+                        <div class="game-year">2019年</div>
+                    </div>
+                </a>
+                <a href="./a19/index.html" class="game-card">
+                    <img src="../../resources/a19/library.jpg" alt="莉迪&苏瑞的炼金工房" class="game-poster"
+                        onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A19 莉迪&苏瑞的炼金工房 ～不可思议绘画的炼金术士～</div>
+                        <div class="game-series">不可思议系列</div>
+                        <div class="game-year">2017年</div>
+                    </div>
+                </a>
+                <a href="./a18/index.html" class="game-card">
+                    <img src="../../resources/a18/library.jpg" alt="菲莉丝的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A18 菲莉丝的炼金工房 ～不可思议旅的炼金术士～</div>
+                        <div class="game-series">不可思议系列</div>
+                        <div class="game-year">2016年</div>
+                    </div>
+                </a>
+                <a href="./a17/index.html" class="game-card">
+                    <img src="../../resources/a17/library.jpg" alt="苏菲的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A17 苏菲的炼金工房 ～不可思议书的炼金术士～</div>
+                        <div class="game-series">不可思议系列</div>
+                        <div class="game-year">2015年</div>
+                    </div>
+                </a>
+                <a href="./a16/index.html" class="game-card">
+                    <img src="../../resources/a16/library.jpg" alt="夏莉的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A16 夏莉的炼金工房 ～黄昏海洋的炼金术士～</div>
+                        <div class="game-series">黄昏系列</div>
+                        <div class="game-year">2014年</div>
+                    </div>
+                </a>
+                <a href="./a15/index.html" class="game-card">
+                    <img src="../../resources/a15/library.jpg" alt="艾斯卡与罗吉的炼金工房" class="game-poster"
+                        onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A15 爱丝卡&罗吉的炼金工房 ～黄昏天空的炼金术士～</div>
+                        <div class="game-series">黄昏系列</div>
+                        <div class="game-year">2013年</div>
+                    </div>
+                </a>
+                <a href="./a14/index.html" class="game-card">
+                    <img src="../../resources/a14/library.jpg" alt="爱夏的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A14 爱夏的炼金工房 ～黄昏大地的炼金术士～</div>
+                        <div class="game-series">黄昏系列</div>
+                        <div class="game-year">2012年</div>
+                    </div>
+                </a>
+                <a href="./a13/index.html" class="game-card">
+                    <img src="../../resources/a13/library.jpg" alt="梅露露的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A13 梅露露的炼金工房 ～亚兰德的炼金术士3～</div>
+                        <div class="game-series">亚兰德系列</div>
+                        <div class="game-year">2011年</div>
+                    </div>
+                </a>
+                <a href="./a12/index.html" class="game-card">
+                    <img src="../../resources/a12/library.jpg" alt="托托莉的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A12 托托莉的炼金工房 ～亚兰德的炼金术士2～</div>
+                        <div class="game-series">亚兰德系列</div>
+                        <div class="game-year">2010年</div>
+                    </div>
+                </a>
+                <a href="./a11/index.html" class="game-card">
+                    <img src="../../resources/a11/library.jpg" alt="萝乐娜的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A11 萝乐娜的炼金工房 ～亚兰德的炼金术士～</div>
+                        <div class="game-series">亚兰德系列</div>
+                        <div class="game-year">2009年</div>
+                    </div>
+                </a>
             </div>
-            
+            <h2>重置</h2>
+            <div class="game-grid">
+                <a href="./a1re/index.html" class="game-card">
+                    <img src="../../resources/a1re/library.jpg" alt="玛莉的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A1RE 玛莉的炼金工房 ～萨尔布鲁克的炼金术士～</div>
+                        <div class="game-series">萨尔布鲁克系列</div>
+                        <div class="game-year">2023年</div>
+                    </div>
+                </a>
+            </div>
         </main>
 
         <footer>
