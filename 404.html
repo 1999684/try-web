@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('./resources/a26/2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #f0f0f0;
+            position: relative;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            margin: 0;
+            color: #66ccff;
+            text-shadow: 0 0 15px rgba(102, 204, 255, 0.5);
+            line-height: 1;
+        }
+        
+        .error-message {
+            font-size: 24px;
+            margin: 20px 0 40px;
+        }
+        
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 30px;
+            background-color: #3366cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .home-link:hover {
+            background-color: #23314d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .error-image {
+            max-width: 300px;
+            margin: 20px auto;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="error-code">404</h1>
+        <p class="error-message">哎呀！看来你迷失在了炼金术的迷雾中...</p>
+        <img src="./resources/a26/error.jpg" alt="炼金术士迷路了" class="error-image" onerror="this.style.display='none'">
+        <p>你所寻找的页面可能已被分解为基础元素，或者从未被合成。</p>
+        <a href="./pages/atelier/index.html" class="home-link">返回炼金系列主页</a>
+    </div>
+</body>
+
+</html>

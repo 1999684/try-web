@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炼金工房系列 - 游戏展示</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #1a1a1a; /* 深色背景底色 */
+            background-image: url('../../resources/a26/2.jpg'); /* 背景图片路径，暂时为空 */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #f0f0f0; /* 更改文字颜色为浅色，以适应深色背景 */
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* 深色半透明蒙版 */
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1; /* 确保内容在蒙版上方 */
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative; /* 添加相对定位 */
+        }
+        
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #3366cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: absolute; /* 绝对定位 */
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%); /* 垂直居中 */
+        }
+        header h1 {
+            color: #66ccff; /* 添加亮蓝色调 */
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 375px; /* 修改高度为宽度的1.5倍，形成2:3的比例 */
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-info {
+            transform: translateY(0);
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .game-series {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .game-year {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .back-link:hover {
+            background-color: #23314d;
+            transform: scale(1.1);
+        }
+
+        .section-title {
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #444; /* 更改为深色边框 */
+            color: #f0f0f0; /* 更改为浅色文字 */
+        }
+        
+        /* 调整卡片样式以适应深色背景 */
+        .game-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* 加深阴影 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 375px;
+            cursor: pointer;
+            background-color: #2a2a2a; /* 卡片背景色调整为深色 */
+        }
+        
+        /* 调整页脚样式 */
+        footer {
+            color: #aaa; /* 更浅的灰色 */
+        }
+        
+        footer a {
+            color: #6699ff; /* 更亮的链接颜色 */
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>炼金工房系列游戏</h1>
+            <p>点击游戏海报查看详细信息</p>
+            <a href="../../index.html" class="back-link">←</a>
+        </header>
+
+        <main>
+            <div class="game-grid">
+                <a href="./a26/index.html" class="game-card">
+                    <img src="../../resources/a26/library.jpg" alt="优米雅的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A26 优米雅的炼金工房 ～追忆之炼金术士与幻创之地～</div>
+                        <div class="game-series">优米雅系列</div>
+                        <div class="game-year">2025年</div>
+                    </div>
+                </a>
+                <a href="./a25/index.html" class="game-card">
+                    <img src="../../resources/a25/library.jpg" alt="蕾斯娜的炼金工房" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A25 蕾斯莱莉娅娜的炼金工房 ～忘却的炼金术与极夜的解放者～</div>
+                        <div class="game-series">蕾斯娜系列</div>
+                        <div class="game-year">2023年</div>
+                    </div>
+                </a>
+                <a href="./a24/index.html" class="game-card">
+                    <img src="../../resources/a24/library.jpg" alt="莱莎的炼金工房3" class="game-poster" onerror="this.src=''">
+                    <div class="game-info">
+                        <div class="game-title">A24 莱莎的炼金工房3 ～终结之炼金术士与秘密钥匙～</div>
+                        <div class="game-series">莱莎系列</div>
+                        <div class="game-year">2023年</div>
+                    </div>
+                </a>
+            </div>
+            
+        </main>
+
+        <footer>
+            <p>© 2025 尝试 | <a href="https://github.com/1999684" target="_blank">GitHub</a> | <a
+                    href="https://ztgdblog.icu/" target="_blank">myblog</a></p>
+        </footer>
+    </div>
+</body>
+
+</html>
