@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>输入框样式</title>
+    <style>
+        :root {
+            --primary-color: #5264AE;
+            --secondary-color: #666;
+            --border-color: #ddd;
+            --transition-speed: 0.3s;
+            --border-height: 1px;
+            --border-before-color: #999;
+            --border-after-color: #5264AE;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+
+        /* 添加一个新的容器用于水平排列输入框 */
+        .inputs-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 50px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .inputs-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* 第一个输入框样式 - 波浪效果 */
+        .wave-group {
+            position: relative;
+            margin: 30px auto;
+            width: 280px;
+        }
+
+        .wave-group .input {
+            font-size: 16px;
+            padding: 12px 15px 12px 15px;
+            display: block;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #515151;
+            background: transparent;
+            box-sizing: border-box;
+            height: 50px;
+        }
+
+        .wave-group .input:focus {
+            outline: none;
+        }
+
+        .wave-group .label {
+            color: #999;
+            font-size: 18px;
+            font-weight: normal;
+            position: absolute;
+            pointer-events: none;
+            left: 5px;
+            top: 10px;
+            display: flex;
+        }
+
+        .wave-group .label-char {
+            transition: 0.2s ease all;
+            transition-delay: calc(var(--index) * .05s);
+        }
+
+        .wave-group .input:focus~.label .label-char,
+        .wave-group .input:valid~.label .label-char {
+            transform: translateY(-20px);
+            font-size: 14px;
+            color: #5264AE;
+        }
+
+        .wave-group .bar {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .wave-group .bar:before,
+        .wave-group .bar:after {
+            content: '';
+            height: 2px;
+            width: 0;
+            bottom: 1px;
+            position: absolute;
+            background: #5264AE;
+            transition: 0.2s ease all;
+            -moz-transition: 0.2s ease all;
+            -webkit-transition: 0.2s ease all;
+        }
+
+        .wave-group .bar:before {
+            left: 50%;
+        }
+
+        .wave-group .bar:after {
+            right: 50%;
+        }
+
+        .wave-group .input:focus~.bar:before,
+        .wave-group .input:focus~.bar:after {
+            width: 50%;
+        }
+
+        /* 第二个输入框样式 - 渐变边框 */
+        .form-control {
+            position: relative;
+            margin: 30px auto;
+            width: 280px;
+        }
+
+        .input {
+            color: #685b5b;
+            font-size: 0.9rem;
+            background-color: transparent;
+            width: 100%;
+            box-sizing: border-box;
+            padding-inline: 0.5em;
+            padding-block: 0.7em;
+            border: none;
+            border-bottom: var(--border-height) solid var(--border-before-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-border {
+            position: absolute;
+            background: var(--border-after-color);
+            width: 0%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        }
+
+        .input:focus {
+            outline: none;
+        }
+
+        .input:focus+.input-border {
+            width: 100%;
+        }
+
+        .input-alt {
+            font-size: 16px;
+            padding: 12px 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+            background-color: #f5f5f5;
+            height: 50px;
+            box-sizing: border-box;
+        }
+
+        .input-border-alt {
+            height: 3px;
+            background: linear-gradient(90deg, #FF6464 0%, #FFBF59 50%, #47C9FF 100%);
+            transition: width 0.4s cubic-bezier(0.42, 0, 0.58, 1.00);
+        }
+
+        .input-alt:focus+.input-border-alt {
+            width: 100%;
+        }
+
+        /* 代码显示和复制功能 */
+        .code-container {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 8px 15px;
+            border-radius: 5px 5px 0 0;
+            border: 1px solid #ddd;
+            border-bottom: none;
+        }
+
+        .code-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #4476cc;
+        }
+
+        .code-content {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 0 0 5px 5px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        /* 复制成功提示 */
+        .copy-tooltip {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+        }
+
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--secondary-color);
+            font-size: 0.9em;
+            transition: color var(--transition-speed), border-color var(--transition-speed);
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+            margin: 0 5px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 说明样式 */
+        .description {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
+        }
+
+        .description p {
+            margin: 0;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .description a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .description a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 输入框容器 -->
+        <div class="inputs-container">
+            <!-- 第一个输入框 - 波浪效果 -->
+            <div class="wave-group">
+                <input required="" type="text" class="input">
+                <span class="bar"></span>
+                <label class="label">
+                    <span class="label-char" style="--index:0">N</span>
+                    <span class="label-char" style="--index:1">a</span>
+                    <span class="label-char" style="--index:2">m</span>
+                    <span class="label-char" style="--index:3">e</span>
+                </label>
+            </div>
+
+            <!-- 第二个输入框 - 渐变边框 -->
+            <div class="form-control">
+                <input class="input input-alt" placeholder="输入一些智能的内容" required="" type="text">
+                <span class="input-border input-border-alt"></span>
+            </div>
+        </div>
+
+        <div class="description">
+            <p>这两款输入框样式是在微信公众号<a href="https://mp.weixin.qq.com/s/JEkg9903K9pigS3tGl8mag"
+                    target="_blank">程序员大澈</a>看到的，原文提供了Vue组件实现。本页面将其改写为纯CSS实现，方便在各种Web项目中直接使用。</p>
+        </div>
+
+        <!-- 波浪输入框CSS代码 -->
+        <div class="code-container">
+            <div class="code-header">
+                <div class="code-title">波浪输入框 CSS</div>
+                <button class="copy-btn" data-target="wave-css">复制代码</button>
+            </div>
+            <pre class="code-content" id="wave-css">
+                /* 波浪输入框样式 */
+                .wave-group {
+                    position: relative;
+                    margin: 30px auto;
+                    width: 280px;
+                }
+        
+                .wave-group .input {
+                    font-size: 16px;
+                    padding: 12px 15px 12px 15px;
+                    display: block;
+                    width: 100%;
+                    border: none;
+                    border-bottom: 1px solid #515151;
+                    background: transparent;
+                    box-sizing: border-box;
+                    height: 50px;
+                }
+        
+                .wave-group .input:focus {
+                    outline: none;
+                }
+        
+                .wave-group .label {
+                    color: #999;
+                    font-size: 18px;
+                    font-weight: normal;
+                    position: absolute;
+                    pointer-events: none;
+                    left: 5px;
+                    top: 10px;
+                    display: flex;
+                }
+        
+                .wave-group .label-char {
+                    transition: 0.2s ease all;
+                    transition-delay: calc(var(--index) * .05s);
+                }
+        
+                .wave-group .input:focus~.label .label-char,
+                .wave-group .input:valid~.label .label-char {
+                    transform: translateY(-20px);
+                    font-size: 14px;
+                    color: #5264AE;
+                }
+        
+                .wave-group .bar {
+                    position: relative;
+                    display: block;
+                    width: 100%;
+                }
+        
+                .wave-group .bar:before,
+                .wave-group .bar:after {
+                    content: '';
+                    height: 2px;
+                    width: 0;
+                    bottom: 1px;
+                    position: absolute;
+                    background: #5264AE;
+                    transition: 0.2s ease all;
+                    -moz-transition: 0.2s ease all;
+                    -webkit-transition: 0.2s ease all;
+                }
+        
+                .wave-group .bar:before {
+                    left: 50%;
+                }
+        
+                .wave-group .bar:after {
+                    right: 50%;
+                }
+        
+                .wave-group .input:focus~.bar:before,
+                .wave-group .input:focus~.bar:after {
+                    width: 50%;
+                }</pre>
+        </div>
+
+        <!-- 渐变边框输入框CSS代码 -->
+        <div class="code-container">
+            <div class="code-header">
+                <div class="code-title">渐变边框输入框 CSS</div>
+                <button class="copy-btn" data-target="gradient-css">复制代码</button>
+            </div>
+            <pre class="code-content" id="gradient-css">
+                /* 渐变边框输入框样式 */
+                .form-control {
+                    position: relative;
+                    margin: 30px auto;
+                    width: 280px;
+                }
+        
+                .input {
+                    color: #685b5b;
+                    font-size: 0.9rem;
+                    background-color: transparent;
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding-inline: 0.5em;
+                    padding-block: 0.7em;
+                    border: none;
+                    border-bottom: var(--border-height) solid var(--border-before-color);
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+        
+                .input-border {
+                    position: absolute;
+                    background: var(--border-after-color);
+                    width: 0%;
+                    height: 2px;
+                    bottom: 0;
+                    left: 0;
+                    transition: width 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+                }
+        
+                .input:focus {
+                    outline: none;
+                }
+        
+                .input:focus+.input-border {
+                    width: 100%;
+                }
+        
+                .input-alt {
+                    font-size: 16px;
+                    padding: 12px 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    color: #333;
+                    background-color: #f5f5f5;
+                    height: 50px;
+                    box-sizing: border-box;
+                }
+        
+                .input-border-alt {
+                    height: 3px;
+                    background: linear-gradient(90deg, #FF6464 0%, #FFBF59 50%, #47C9FF 100%);
+                    transition: width 0.4s cubic-bezier(0.42, 0, 0.58, 1.00);
+                }
+        
+                .input-alt:focus+.input-border-alt {
+                    width: 100%;
+                }</pre>
+        </div>
+
+        <footer>
+            <p>© 2025 尝试 | <a href="https://github.com/1999684" target="_blank">GitHub</a> | <a
+                    href="https://ztgdblog.icu/" target="_blank">myblog</a></p>
+        </footer>
+    </div>
+    <script>
+        // 复制代码功能
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const codeElement = document.getElementById(targetId);
+                const codeText = codeElement.textContent;
+
+                // 创建临时文本区域并复制
+                const textarea = document.createElement('textarea');
+                textarea.value = codeText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                // 显示复制成功提示
+                const tooltip = document.getElementById('copy-tooltip');
+                tooltip.classList.add('show');
+
+                // 2秒后隐藏提示
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+
+</html>
